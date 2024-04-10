@@ -1,0 +1,179 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": [],
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/kavindim/DAB100Test/blob/main/Stat\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "mg_jtL0RVn8j",
+        "outputId": "d95aba93-0349-4543-906c-cc71dbcd5815"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "t-statistic: -3.6651205440016836\n",
+            "p-value: 0.000509104278153721\n",
+            "Reject the null hypothesis. There is a significant difference in the mean salaries between Company X and Company Y.\n"
+          ]
+        }
+      ],
+      "source": [
+        "from scipy import stats\n",
+        "\n",
+        "# Data for Company X\n",
+        "n_x = 30\n",
+        "mean_x = 52000\n",
+        "std_dev_x = 3000\n",
+        "\n",
+        "# Data for Company Y\n",
+        "n_y = 35\n",
+        "mean_y = 54500\n",
+        "std_dev_y = 2500\n",
+        "\n",
+        "# Significance level\n",
+        "alpha = 0.05\n",
+        "\n",
+        "# Calculate the t-statistic and p-value\n",
+        "t_stat, p_value = stats.ttest_ind_from_stats(mean_x, std_dev_x, n_x, mean_y, std_dev_y, n_y)\n",
+        "\n",
+        "# Print the results\n",
+        "print(\"t-statistic:\", t_stat)\n",
+        "print(\"p-value:\", p_value)\n",
+        "\n",
+        "# Check if p-value is less than alpha to make a decision\n",
+        "if p_value < alpha:\n",
+        "    print(\"Reject the null hypothesis. There is a significant difference in the mean salaries between Company X and Company Y.\")\n",
+        "else:\n",
+        "    print(\"Fail to reject the null hypothesis. There is no significant difference in the mean salaries between Company X and Company Y.\")\n"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "from scipy import stats\n",
+        "\n",
+        "# Population mean\n",
+        "population_mean = 100\n",
+        "\n",
+        "# Sample data\n",
+        "sample_mean = 105\n",
+        "sample_std_dev = 15\n",
+        "sample_size = 50\n",
+        "\n",
+        "# Calculate the t-statistic and p-value\n",
+        "t_statistic = (sample_mean - population_mean) / (sample_std_dev / (sample_size ** 0.5))\n",
+        "degrees_of_freedom = sample_size - 1\n",
+        "p_value = stats.t.sf(abs(t_statistic), degrees_of_freedom) * 2  # two-tailed test\n",
+        "\n",
+        "# Print the results\n",
+        "print(\"t-statistic:\", t_statistic)\n",
+        "print(\"p-value:\", p_value)\n",
+        "\n",
+        "# Conduct hypothesis test\n",
+        "alpha = 0.05\n",
+        "if p_value < alpha:\n",
+        "    print(\"Reject the null hypothesis. There is enough evidence to suggest that the average IQ of the population is not 100.\")\n",
+        "else:\n",
+        "    print(\"Fail to reject the null hypothesis. There is not enough evidence to suggest that the average IQ of the population is not 100.\")\n"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "McMqntqmVuLu",
+        "outputId": "5ffe4288-8758-467f-93d5-a6559a2b8b13"
+      },
+      "execution_count": null,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "t-statistic: 2.3570226039551585\n",
+            "p-value: 0.022462232199022495\n",
+            "Reject the null hypothesis. There is enough evidence to suggest that the average IQ of the population is not 100.\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import scipy.stats as stats\n",
+        "\n",
+        "# Given data\n",
+        "std_dev_existing = 8\n",
+        "mean_reduction_new = 4\n",
+        "alpha = 0.01\n",
+        "power = 0.9\n",
+        "\n",
+        "# Calculate critical values for two-tailed test\n",
+        "z_alpha = stats.norm.ppf(1 - alpha/2)\n",
+        "z_beta = stats.norm.ppf(power)\n",
+        "\n",
+        "# Calculate effect size\n",
+        "effect_size = mean_reduction_new / std_dev_existing\n",
+        "\n",
+        "# Calculate sample size\n",
+        "sample_size = ((z_alpha + z_beta) / effect_size) ** 2\n",
+        "\n",
+        "print(\"Required sample size:\", round(sample_size))\n"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "xMcRCtO-XuLf",
+        "outputId": "6a390e44-bd34-47f1-f07d-11f835397e9b"
+      },
+      "execution_count": null,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Required sample size: 60\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [],
+      "metadata": {
+        "id": "YO4y--sbXu-5"
+      },
+      "execution_count": null,
+      "outputs": []
+    }
+  ]
+}
